@@ -9,6 +9,7 @@ local DISPEL_SPELL_IDS = {
 local TRACKED_SPELL_ID = nil
 
 local frame = CreateFrame("Frame", "DispelOnCursor", UIParent)
+frame:SetFrameStrata("TOOLTIP")
 
 local cooldownFrame = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
 cooldownFrame:SetSize(1, 1)
