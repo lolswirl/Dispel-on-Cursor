@@ -6,6 +6,9 @@
 ## Author: Swirl
 ## IconTexture: Interface\AddOns\DispelOnCursor\Media\DOC.png
 
+## X-Curse-Project-ID: 1451555
+## X-Wago-ID: kGryRXKy
+
 ## Category: Combat
 ## Category-deDE: Kampf
 ## Category-esES: Combate
