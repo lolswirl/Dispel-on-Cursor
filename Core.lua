@@ -46,12 +46,7 @@ local function UpdateCooldown()
     end
 
     local cdInfo = C_Spell.GetSpellCooldown(TRACKED_SPELL_ID)
-    if not cdInfo then
-        cooldownFrame:Clear()
-        return
-    end
-
-    if cdInfo.startTime and cdInfo.duration then
+    if cdInfo and cdInfo.startTime and cdInfo.duration then
         cooldownFrame:SetCooldown(cdInfo.startTime, cdInfo.duration)
     else
         cooldownFrame:Clear()
@@ -63,20 +58,24 @@ frame:SetScript("OnUpdate", function(self, elapsed)
     local scale = UIParent:GetEffectiveScale()
     cooldownText:ClearAllPoints()
     cooldownText:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", (x / scale) + 10, (y / scale) + 10)
-
-    UpdateCooldown()
 end)
 
 frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
 
 frame:SetScript("OnEvent", function(self, event, ...)
-    for _, spellID in ipairs(DISPEL_SPELL_IDS) do
-        if C_SpellBook.IsSpellInSpellBook(spellID) then
-            TRACKED_SPELL_ID = spellID
-            return
+    if event == "PLAYER_LOGIN" or event == "PLAYER_ENTERING_WORLD" then
+        for _, spellID in ipairs(DISPEL_SPELL_IDS) do
+            if C_SpellBook.IsSpellInSpellBook(spellID) then
+                TRACKED_SPELL_ID = spellID
+                UpdateCooldown()
+                return
+            end
         end
+        
+        print("|cff57e3adDispelOnCursor:|r No tracked spell found for this class/spec")
+    elseif event == "SPELL_UPDATE_COOLDOWN" then
+        UpdateCooldown()
     end
-    
-    print("|cff57e3adDispelOnCursor:|r No tracked spell found for this class/spec")
 end)
