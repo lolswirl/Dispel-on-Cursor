@@ -47,7 +47,7 @@ local function UpdateCooldown()
 
     local duration = C_Spell.GetSpellCooldownDuration(TRACKED_SPELL_ID)
     if duration then
-        cooldownFrame:SetCooldownFromDurationObject(duration, true)
+        cooldownFrame:SetCooldownFromDurationObject(duration, false)
     else
         cooldownFrame:Clear()
     end
