@@ -45,9 +45,9 @@ local function UpdateCooldown()
         return
     end
 
-    local cdInfo = C_Spell.GetSpellCooldown(TRACKED_SPELL_ID)
-    if cdInfo and cdInfo.startTime and cdInfo.duration then
-        cooldownFrame:SetCooldown(cdInfo.startTime, cdInfo.duration)
+    local duration = C_Spell.GetSpellCooldownDuration(TRACKED_SPELL_ID)
+    if duration then
+        cooldownFrame:SetCooldownFromDurationObject(duration, true)
     else
         cooldownFrame:Clear()
     end
